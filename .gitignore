@@ -1,0 +1,141 @@
+# ============================================================
+# Gradle
+# ============================================================
+.gradle/
+**/build/
+!src/**/build/
+
+# Gradle wrapper (jar ja e comitado, mas ignore props locais)
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Build de saida (JARs, APKs, etc soh se o time decidir versionar manualmente)
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.so
+*.dylib
+*.dll
+
+# Relatorios e logs
+hs_err_pid*
+replay_pid*
+*.log
+
+# ============================================================
+# Kotlin Multiplatform / Compose Multiplatform
+# ============================================================
+.kotlin/
+kotlin-js-store/
+*.js.map
+*.d.ts
+
+# Artefatos Wasm/JS gerados pelo build
+**/wasm/
+**/js/
+**/compose/
+*.wasm
+*.mjs
+*.cjs
+
+# ============================================================
+# Android
+# ============================================================
+# Arquivo local com caminho do SDK (cada dev tem o seu)
+local.properties
+
+# Capturas de perfil / profiling / debug do Android Studio
+captures/
+.externalNativeBuild/
+.cxx/
+.cxx/
+
+# Outputs de compilacao especificos Android
+*.idsig
+
+# ============================================================
+# IDEs: IntelliJ IDEA, Android Studio, VS Code
+# ============================================================
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Android Studio / IntelliJ - keep se o time usar arquivos compartilhaveis
+# Descomente se quiser versionar a configuracao da IDE
+# !.idea/codeStyles/
+# !.idea/runConfigurations/
+
+# VS Code
+.vscode/
+.history/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# ============================================================
+# Apple / macOS / Windows / Linux
+# ============================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# iOS (caso adicione target Kotlin/Native no futuro)
+# ============================================================
+xcuserdata/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+build/
+DerivedData/
+*.hmap
+
+# ============================================================
+# Node.js (caso algum dia adicione ferramentas JS / React / npm)
+# ============================================================
+node_modules/
+.npm
+.cache/
+.eslintcache
+.parcel-cache/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+package-lock.json
+yarn-error.log
+yarn.lock
+pnpm-lock.yaml
+
+# ============================================================
+# Secrets e variaveis de ambiente
+# ============================================================
+.env
+.env.local
+.env.*.local
+*.jks
+*.keystore
+*.p12
+*.pem
+signing.properties
+secrets.properties
