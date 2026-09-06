@@ -1,9 +1,9 @@
 # Projeto Integrador 6 Semestre
 
-Projeto organizado em duas partes:
+Projeto organizado em duas partes, ambas em Kotlin:
 
-- `frontendMultiplataforma`: aplicacao Kotlin Multiplatform com Compose Multiplatform.
-- `backend`: diretorio reservado para o backend. Atualmente nao ha arquivos ou configuracao de execucao nele.
+- `frontendMultiplataforma`: aplicacao Kotlin Multiplatform com Compose Multiplatform (Android + Desktop + Web).
+- `backend`: aplicacao Spring Boot 4.1.1 + Kotlin + JPA + PostgreSQL (servidor REST).
 
 O frontend possui os seguintes alvos:
 
@@ -12,7 +12,7 @@ O frontend possui os seguintes alvos:
 - Web com Kotlin/Wasm
 - Web com Kotlin/JS
 
----
+***
 
 ## Estrutura principal
 
@@ -36,7 +36,7 @@ ProjetoIntegrador6Sem/
 
 O codigo compartilhado fica principalmente em `frontendMultiplataforma/shared/src/commonMain`.
 
----
+***
 
 ## Estrutura interna do commonMain (onde voce vai codar 95% do front)
 
@@ -76,7 +76,7 @@ shared/src/commonMain/kotlin/projeto/integrador/sexto/
         `-- compose-multiplatform.xml
 ```
 
----
+***
 
 ## Como criar uma TELA NOVA (passo a passo)
 
@@ -88,7 +88,7 @@ Suponha que voce queira criar a tela de **Perfil** (ex: Perfil do usuario). Siga
 shared/src/commonMain/kotlin/projeto/integrador/sexto/ui/screens/perfil/
 ```
 
----
+***
 
 ### Passo 2 - Criar o `PerfilViewModel.kt` (estado + logica)
 
@@ -136,7 +136,7 @@ class PerfilViewModel {
 }
 ```
 
----
+***
 
 ### Passo 3 - Criar o `PerfilViewModelFactory.kt` (boilerplate minimo)
 
@@ -167,7 +167,7 @@ fun lembrarPerfilViewModel(idUsuario: String): PerfilViewModel {
 }
 ```
 
----
+***
 
 ### Passo 4 - Criar o `PerfilScreen.kt` (só UI, sem logica)
 
@@ -213,7 +213,7 @@ fun PerfilScreen(
 }
 ```
 
----
+***
 
 ### Passo 5 - Registrar a rota em `Rotas.kt`
 
@@ -237,7 +237,7 @@ sealed class RotaApp {
 }
 ```
 
----
+***
 
 ### Passo 6 - Ligar tudo no `NavGraph.kt`
 
@@ -274,7 +274,7 @@ fun AppNavHost(navController: AppNavController) {
 }
 ```
 
----
+***
 
 ## Como navegar DE UMA TELA PARA OUTRA
 
@@ -315,20 +315,21 @@ is RotaApp.Home -> {
 
 ### Comandos uteis do AppNavController
 
-| Acao | Codigo |
-|---|---|
-| Ir para outra tela (empilha) | `navController.navegarPara(RotaApp.Perfil)` |
-| Ir e apagar TODA a pilha (ex: login -> home) | `navController.navegarELimpar(RotaApp.Home("Maria"))` |
-| Voltar uma tela (desempilha) | `navController.voltar()` |
-| Voltar ate uma tela especifica | `navController.voltarAte(RotaApp.Home(), inclusive = false)` |
+| Acao                                         | Codigo                                                       |
+| -------------------------------------------- | ------------------------------------------------------------ |
+| Ir para outra tela (empilha)                 | `navController.navegarPara(RotaApp.Perfil)`                  |
+| Ir e apagar TODA a pilha (ex: login -> home) | `navController.navegarELimpar(RotaApp.Home("Maria"))`        |
+| Voltar uma tela (desempilha)                 | `navController.voltar()`                                     |
+| Voltar ate uma tela especifica               | `navController.voltarAte(RotaApp.Home(), inclusive = false)` |
 
----
+***
 
 ## Como usar os componentes prontos
 
 Foram criados 3 componentes reutilizaveis em `ui/components/`:
 
 ### BotaoPrimario
+
 ```kotlin
 BotaoPrimario(
     texto = "Salvar",
@@ -338,6 +339,7 @@ BotaoPrimario(
 ```
 
 ### CampoTexto
+
 ```kotlin
 CampoTexto(
     valor = state.nome,
@@ -350,6 +352,7 @@ CampoTexto(
 ```
 
 ### CardSimples
+
 ```kotlin
 CardSimples(titulo = "Dados do pedido") {
     Text("Numero: 123")
@@ -359,7 +362,7 @@ CardSimples(titulo = "Dados do pedido") {
 
 Para criar componentes novos: basta criar um arquivo `.kt` em `ui/components/` seguindo o mesmo modelo.
 
----
+***
 
 ## Como usar o tema (cores, fontes, shapes)
 
@@ -383,7 +386,7 @@ Para mudar as cores do app (tema claro/escuro), edite apenas o arquivo
 `shared/src/commonMain/kotlin/projeto/integrador/sexto/ui/theme/Color.kt`.
 Todas as telas se atualizam automaticamente.
 
----
+***
 
 ## Quando usar androidMain / jvmMain / jsMain / wasmJsMain
 
@@ -391,6 +394,7 @@ Use somente quando precisar de uma API especifica de uma plataforma.
 Padrao: `expect` no commonMain, `actual` em cada source set.
 
 Exemplo ja existente no projeto:
+
 - `shared/src/commonMain/.../Platform.kt` → `expect fun getPlatform()`
 - `shared/src/androidMain/.../Platform.android.kt` → `actual fun getPlatform()`
 - `shared/src/jvmMain/.../Platform.jvm.kt` → `actual fun getPlatform()`
@@ -399,7 +403,7 @@ Exemplo ja existente no projeto:
 Se for algo que funciona em todas (ex: uma tela, uma logica matematica,
 validacao, formatacao de texto), **sempre coloque no commonMain**.
 
----
+***
 
 ## Execucao no Windows
 
@@ -457,7 +461,7 @@ Com um emulador ou dispositivo conectado, instale e execute com:
 
 Outra opcao e abrir `frontendMultiplataforma` no Android Studio, aguardar a sincronizacao do Gradle, selecionar a configuracao `androidApp` e clicar em Run.
 
----
+***
 
 ## Comandos uteis do Gradle
 
@@ -479,22 +483,176 @@ Recompilar os modulos:
 .\gradlew.bat build
 ```
 
----
+***
 
 ## Cheat sheet rapido para quem vem de React / Android XML
 
-| O que voce quer fazer | Compose Multiplatform |
+| O que voce quer fazer             | Compose Multiplatform                                                                                      |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Componente reutilizavel           | Funcao com `@Composable`                                                                                   |
+| Estado local dentro do componente | `var valor by remember { mutableStateOf("") }`                                                             |
+| Estado global da tela             | Classe ViewModel com UiState + mutableStateOf, instancia guardada com remember{}                           |
+| Efeito ao montar a tela           | `LaunchedEffect(Unit) { ... }`                                                                             |
+| Passa props pra filho             | Parametros normais da funcao composable                                                                    |
+| Botao clicavel                    | `Button(onClick = { ... }) { Text("Ok") }`                                                                 |
+| Lista de itens                    | `LazyColumn { items(lista) { item -> ... } }`                                                              |
+| Espacamento entre itens           | `Arrangement.spacedBy(8.dp)` ou `Spacer(Modifier.height(8.dp))`                                            |
+| Espacamento interno               | `Modifier.padding(16.dp)`                                                                                  |
+| Largura total                     | `Modifier.fillMaxWidth()`                                                                                  |
+| Centralizar                       | `Box(contentAlignment = Alignment.Center)` ou `Column(horizontalAlignment = Alignment.CenterHorizontally)` |
+| Condicional                       | `if (estado) { Componente() }`                                                                             |
+| Navegar para tela                 | callback passado pela NavGraph (ex: `aoAbrirPerfil = { navController.navegarPara(RotaApp.Perfil) }`)       |
+
+***
+
+***
+
+# Backend - Spring Boot + Kotlin + PostgreSQL
+
+## Estrutura de pastas do backend
+
+```text
+backend/
+|
+|-- .env.example                 # Copie para .env e preencha com seus dados (ESTE ARQUIVO NAO VAI PRO GITHUB)
+|
+|-- build.gradle.kts             # Plugins e dependencias
+|-- settings.gradle.kts
+|-- gradle.properties            # Permite auto-download do JDK 21
+|-- gradlew / gradlew.bat        # Wrapper do Gradle (igual ao frontend)
+|
+`-- src/
+    |
+    |-- main/
+    |   |
+    |   |-- kotlin/com/example/backend/
+    |   |   |
+    |   |   |-- BackendApplication.kt   # Ponto de entrada: runApplication (clica com shift+F10 p/ rodar)
+    |   |   |
+    |   |   |-- config/                 # Configuracoes de infra: CORS, Swagger, Beans de seguranca
+    |   |   |-- controller/             # Pontos de entrada REST: @RestController, @GetMapping, @PostMapping
+    |   |   |-- dto/                    # Objetos de Request/Response (o que entra e sai por JSON)
+    |   |   |-- entity/                 # Classes @Entity: 1 arquivo = 1 tabela do Postgres
+    |   |   |-- exception/              # Exceptions customizadas e @ControllerAdvice global
+    |   |   |-- repository/             # Interfaces Spring Data JPA (extends JpaRepository)
+    |   |   `-- service/                # Regras de negocio, orquestra repository + validacoes
+    |   |
+    |   `-- resources/
+    |       `-- application.properties  # Porta, conexao BD, configs do Hibernate (le variaveis do .env)
+    |
+    `-- test/                           # Testes unitarios e de integracao (atualmente vazio)
+        `-- kotlin/com/example/backend/
+```
+
+## Como RODAR o backend pela primeira vez
+
+### Passo 1 - Confira o arquivo `.env`
+
+O backend já está configurado para usar um **PostgreSQL serverless na nuvem (Neon.tech em São Paulo)**. NÃO é necessário instalar o Postgres localmente.
+
+Verifique se existe o arquivo `backend/.env` com as 3 variáveis abaixo. Os valores reais devem estar nesse arquivo (ele NÃO vai para o GitHub):
+
+```
+DB_URL=jdbc:postgresql://......../projeto_6_semestre?sslmode=require
+DB_USER=projeto_6_semestre_owner
+DB_PASSWORD=<senha_real_do_banco>
+```
+
+Se o `.env` não existir, copie do [.env.example](file:///c:/Users/ricar/Projetos/ProjetoIntegrador6Sem/backend/.env.example) e cole os valores corretos.
+
+### Passo 2 - Suba o servidor
+
+```powershell
+cd backend
+.\gradlew.bat bootRun
+```
+
+### Passo 3 - Teste
+
+Quando aparecer no terminal algo parecido com `85% EXECUTING`o backend esta no ar. Nao ha endpoints ainda, entao vai dar 404 em tudo ate voce criar os primeiros controllers.
+
+### Passo 4 - Abra a interface do Swagger (documentacao interativa da API)
+
+Enquanto o servidor estiver rodando, voce pode testar TODOS os endpoints sem precisar do frontend.
+
+| Endereco | O que e? |
 |---|---|
-| Componente reutilizavel | Funcao com `@Composable` |
-| Estado local dentro do componente | `var valor by remember { mutableStateOf("") }` |
-| Estado global da tela | Classe ViewModel com UiState + mutableStateOf, instancia guardada com remember{} |
-| Efeito ao montar a tela | `LaunchedEffect(Unit) { ... }` |
-| Passa props pra filho | Parametros normais da funcao composable |
-| Botao clicavel | `Button(onClick = { ... }) { Text("Ok") }` |
-| Lista de itens | `LazyColumn { items(lista) { item -> ... } }` |
-| Espacamento entre itens | `Arrangement.spacedBy(8.dp)` ou `Spacer(Modifier.height(8.dp))` |
-| Espacamento interno | `Modifier.padding(16.dp)` |
-| Largura total | `Modifier.fillMaxWidth()` |
-| Centralizar | `Box(contentAlignment = Alignment.Center)` ou `Column(horizontalAlignment = Alignment.CenterHorizontally)` |
-| Condicional | `if (estado) { Componente() }` |
-| Navegar para tela | callback passado pela NavGraph (ex: `aoAbrirPerfil = { navController.navegarPara(RotaApp.Perfil) }`) |
+| http://localhost:8081/swagger | **Atalho pratico (recomendado)** |
+| http://localhost:8081/swagger-ui/index.html | Pagina completa (o atalho /swagger redireciona para ca) |
+| http://localhost:8081/v3/api-docs | JSON bruto da especificacao OpenAPI (para Postman / clientes) |
+
+Conforme voce criar novos controllers no backend, eles aparecerao automaticamente nessa pagina, agrupados por tag e ordenados alfabeticamente.
+
+***
+
+## Swagger / OpenAPI - como documentar seus endpoints
+
+A dependencia `springdoc-openapi-starter-webmvc-ui` ja esta configurada globalmente. Basta voce anotar seus controllers com essas anotacoes opcionais:
+
+```kotlin
+@Tag(name = "Aquarios", description = "CRUD de aquarios da loja")
+@RestController
+@RequestMapping("/api/aquarios")
+class AquarioController(...) {
+
+    @Operation(summary = "Lista todos os aquarios", description = "Retorna todos os aquarios cadastrados para a loja autenticada.")
+    @ApiResponses(value = [
+        io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Lista carregada com sucesso"),
+        io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Nao autenticado")
+    ])
+    @GetMapping
+    fun listar(): List<AquarioResponse> = ...
+}
+```
+
+A classe de configuracao global esta em [backend/src/main/kotlin/com/example/backend/config/SwaggerConfig.kt](file:///c:/Users/ricar/Projetos/ProjetoIntegrador6Sem/backend/src/main/kotlin/com/example/backend/config/SwaggerConfig.kt).
+
+***
+
+## Resumo do que cada camada FAZ e NAO FAZ
+
+| Camada         | Responsabilidade                                           | Coisa que ELA NAO DEVE FAZER                                             |
+| -------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **Controller** | Traduz HTTP (rotas, verbos, status codes) para Java/Kotlin | Conter regras de negocio, escrever SQL, acessar repository diretamente   |
+| **Service**    | Validacoes de negocio, orquestracao, calculos              | Conter anotações HTTP, manipular HttpServletRequest/Response diretamente |
+| **Repository** | Acesso aos dados (JPQL/SQL)                                | Conter logica de negocio ou validacao de input                           |
+| **Entity**     | Mapeamento 1:1 com a tabela                                | Ser usada em parametros de Controller (use DTOs)                         |
+| **DTO**        | Serializacao JSON de entrada/saida                         | Ter anotacoes @Entity ou logica                                          |
+| **Config**     | Beans de infraestrutura (CORS, Swagger, Security)          | Conter regras de negocio                                                 |
+| **Exception**  | Exceptions customizadas + tratamento global 404/400/500    | Conter regras de negocio                                                 |
+
+***
+
+## Comandos uteis do backend (PowerShell)
+
+```powershell
+cd backend
+
+# Roda o servidor em modo desenvolvimento (recomendado para codar)
+.\gradlew.bat bootRun
+
+# Compila tudo e gera o JAR executavel em backend/build/libs/backend-0.0.1-SNAPSHOT.jar
+.\gradlew.bat bootJar
+
+# Limpa a pasta build
+.\gradlew.bat clean
+
+# Compila sem rodar testes
+.\gradlew.bat assemble
+```
+
+## Inicializando Backend (resumo rapido)
+
+Entre no diretório do backend:
+
+```powershell
+cd .\backend
+```
+
+Use o comando a seguir para inicializar:
+
+```powershell
+.\gradlew.bat bootRun
+```
+
+Se o terminal mostrar "85% EXECUTING", o backend estará disponível em http\://localhost:8081.
