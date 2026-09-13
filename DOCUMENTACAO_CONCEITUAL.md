@@ -1,6 +1,6 @@
 # Documentação Conceitual do Projeto
 
-ERP para lojas de aquarismo com monitoramento IoT via ESP32 + MQTT.
+ERP para lojas de aquarismo com monitoramento IoT via ESP32 + MQTT. AquaMonitor
 
 ## 1. Objetivo geral
 

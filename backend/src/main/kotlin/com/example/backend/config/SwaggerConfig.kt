@@ -21,7 +21,7 @@ class SwaggerConfig {
             )
             .info(
                 Info()
-                    .title("ERP para Lojas de Aquarismo - API REST")
+                    .title("AquaMonitor - API REST")
                     .version("0.0.1-SNAPSHOT")
                     .description(
                         "Sistema de gerenciamento e monitoramento de lojas de aquarismo. " +

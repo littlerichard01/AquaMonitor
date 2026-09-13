@@ -34,7 +34,10 @@ class Especie(
     var criadoEm: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "atualizado_em", nullable = false)
-    var atualizadoEm: LocalDateTime = LocalDateTime.now()
+    var atualizadoEm: LocalDateTime = LocalDateTime.now(),
+
+    @OneToMany(mappedBy = "especie", cascade = [CascadeType.ALL], orphanRemoval = false)
+    var especimes: MutableList<Especime> = mutableListOf()
 ) {
 
     @PreUpdate
